@@ -1,8 +1,9 @@
-import React from 'react'
+import { useState } from 'react'
 import { Link } from "react-router-dom";
-import SignUp from "./SignUp";
 
 export default function SignIn() {
+
+  const [] = useState();
   return (
     <div>
       <div className='p-3 max-w-lg mx-auto'>
@@ -20,7 +21,6 @@ export default function SignIn() {
         <p>Don't have any account?</p>
         <Link to='/sign-up'>
           <span className='text-blue-700' >Sign up</span>
-          {/* <SignUp>have</SignUp> */}
         </Link>
       </div>
     </div>
