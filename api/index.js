@@ -5,6 +5,7 @@ dotenv.config();
 import express from 'express'
 import mongoose from "mongoose";
 import userRouter from './routers/userRoute.js';
+import cookieParser from 'cookie-parser';
 
 
 
@@ -23,6 +24,7 @@ app.listen(process.env.PORT, () => {
 
 //bodyParser
 app.use(express.json());
+app.use(cookieParser());
 // app.use(cors());
 app.use('/api/user', userRouter);
 
