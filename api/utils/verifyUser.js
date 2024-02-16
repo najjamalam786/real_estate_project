@@ -1,4 +1,4 @@
-// import { errorHandler } from "./errors";
+import { errorHandler } from "./errors.js";
 import jwt from "jsonwebtoken"
 
 export const verifyToken = (req, res, next) => {
@@ -6,8 +6,8 @@ export const verifyToken = (req, res, next) => {
 
     if (!token) return next(errorHandler(401, 'Unauthorized user'));
      
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return next(errorHandler(403, 'Forbidden najjam alala'));
+    jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+        if (error) return next(errorHandler(403, 'Forbidden najjam alala'));
 
         req.user = user;
         next();

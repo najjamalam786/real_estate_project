@@ -44,8 +44,8 @@ export default function SignIn() {
       
       if(data.success === false) {
         // setLoading(false);
-        // setError(data.Message);
-        dispatch(signInFailure(data.Message));
+        // setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
       // setLoading(false);
@@ -56,7 +56,7 @@ export default function SignIn() {
     }catch(error){
       // setError(error.message);
       // setLoading(false)
-      dispatch(signInFailure(error.Message));
+      dispatch(signInFailure(error.message));
     }
   }
 

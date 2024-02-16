@@ -1,83 +1,95 @@
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
+import { updateUserFailure, updateUserStart, updateUserSuccess } from '../app/user/userSlice';
 
 export default function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
-
-
+  
+  const dispatch = useDispatch();
+  
   // firebase storage
   // allow read;
   // allow write: if request.resource.size < 2 * 1024 * 1024
   //                  && request.resource.contentType.matches('image/.*');
   // allow read, write: if request.auth != null;
-
+  
   // use for upload only image file in firebase storage
   const [file, setFile] = useState(undefined);
   const [filePercent, setFilePercent] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-
   const [formData, setFormData] = useState({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
-
+  console.log(formData);
+  
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
   }, [file]);
-
+  
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
+    
     uploadTask.on('state_changed',
+    
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      setFilePercent(Math.round(progress));
+    },
+    (error) => {
+      setFileUploadError(true);
+    },
 
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setFilePercent(Math.round(progress));
-      },
-      (error) => {
-        setFileUploadError(true);
-      },
-
-      () => {
+    () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({ ...formData, avatar: downloadURL }));
       },
-    );
+      );
+      
+    }
+    
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.id]: e.target.value})
+    };
+    
+    const handleSubmit = async(e) => {
+      console.log(error);
+      e.preventDefault();
+      try{
+        dispatch(updateUserStart());
+        const res = await fetch(`/api/user/update/${currentUser._id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        
+        const data = await res.json();
+    if(data.success === false){
+      dispatch(updateUserFailure(data.message));
+      return;
+    }
 
+    dispatch(updateUserSuccess(data));
+    setUpdateSuccess(true);
+
+  }catch(error){
+    dispatch(updateUserFailure(error.message));
   }
-
-  // const handleFileUpload = (file) => {
-  //   const storage = getStorage(app);
-  //   const fileName = new Date().getTime() + file.name;
-  //   const storageRef = ref(storage, fileName);
-  //   const uploadTask = uploadBytesResumable(storageRef, file);
-
-  //   uploadTask.on('state_changed',
-  //   (snapshot) => {
-  //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //     setFilePercent(Math.round(progress));
-  //   },
-
-  //   (error) => {
-  //     setFileUploadError(true);
-  //   },
-  //   () => {
-  //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //     setFormData({ ...formData, avatar: downloadURL })});
-  //   },
-  //   );
-  // }
+ }
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profil</h1>
-      <form className='flex flex-col gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 
         {/* choose file and then open system files using "fileRef.current.click()" function*/}
         <input type="file" onChange={(e) => setFile(e.target.files[0])} ref={fileRef} accept='image/*' hidden />
@@ -97,10 +109,12 @@ export default function Profile() {
           }
         </p>
 
-        <input className='border p-3 rounded-lg' type="text" placeholder='username' id='username' />
-        <input className='border p-3 rounded-lg' type="email" placeholder='email' id='email' />
-        <input className='border p-3 rounded-lg' type="password" placeholder='password' id='password' />
-        <button type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>Update</button>
+        <input className='border p-3 rounded-lg' type="text" placeholder='username' defaultValue={currentUser.username} id='username' onChange={handleChange}/>
+        <input className='border p-3 rounded-lg' type="email" placeholder='email' defaultValue={currentUser.email} id='email' onChange={handleChange}/>
+        <input className='border p-3 rounded-lg' type="password" placeholder='password'  id='password' onChange={handleChange}/>
+
+        <button disabled={loading} type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading' : 'Update'}</button> 
+        
 
       </form>
 
@@ -113,6 +127,9 @@ export default function Profile() {
         </span>
 
       </div>
+      
+      <p className='text-red-700 mt-5'>{error ? error : ''}</p>
+      <p className='text-green-700 mt-5'> {updateSuccess ? "Profile Updated Successfully!" : ""}</p>
     </div>
   )
 }

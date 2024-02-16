@@ -39,7 +39,7 @@ export default function SignUp() {
       
       if(data.success === false) {
         setLoading(false);
-        setError(data.Message);
+        setError(data.message);
         return;
       }
       setLoading(false);
