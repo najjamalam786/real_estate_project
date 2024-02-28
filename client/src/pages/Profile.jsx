@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -150,7 +151,10 @@ export default function Profile() {
         <input className='border p-3 rounded-lg' type="password" placeholder='password'  id='password' onChange={handleChange}/>
 
         <button disabled={loading} type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading' : 'Update'}</button> 
+
         
+        <Link to='/create-listing' className="bg-green-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95 text-center">Create Listing
+        </Link>
 
       </form>
 
