@@ -9,6 +9,7 @@ import Header from './components/Header';
 import PrivateRout from './components/PrivateRout';
 import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
+import Listing from './pages/Listing';
 
 
 
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />
+        <Route path="/listing/:listingId" element={<Listing />} />
 
         {/* after signOut, can't access profile by using "/profile" */}
         <Route element={<PrivateRout />}>
