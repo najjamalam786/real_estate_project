@@ -3,6 +3,7 @@ import { errorHandler } from "../utils/errors.js";
 import User from "../models/userModel.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Listing from "../models/listingModel.js";
 
 // Sign Up API
 export const signUp = async (req, res, next) => {
@@ -157,4 +158,22 @@ export const signOut = async(req, res, next) => {
     next(error)
   }
 
+}
+
+// Create User Listing
+export const getUserListings = async (req, res, next) => {
+  
+  if(req.user.id === req.params.id){
+
+    try{
+
+      const listings = await Listing.find({ userRef: req.params.id });
+      res.status(200).json(listings);
+
+    }catch(error){
+      next(error)
+    }
+  }else{
+    return next(errorHandler(401, "You can only view your own listings!"))
+  }
 }
