@@ -76,7 +76,7 @@ export default function UpdateListing() {
                     setUploading(false);
                 })
                 .catch((err) => {
-                    setImageUploadError("Image upload failed (2MB max per image)");
+                    setImageUploadError("Image upload failed (3MB max per image)");
                     setUploading(false);
                 });
         } else {
@@ -323,7 +323,7 @@ export default function UpdateListing() {
                         <p className="font-semibold">
                             Images:
                             <span className="font-normal text-gray-600 ml-2">
-                                The first image will be the cover (max 6 and less than 2MB)
+                                The first image will be the cover (max 6 and less than 3MB)
                             </span>
                         </p>
                         <div className="flex gap-4">
