@@ -33,6 +33,7 @@ export default function Header() {
         if(searchTermFromUrl){
             setSearchInput(searchTermFromUrl);
         }
+        // condition set on search path
     }, [location.search]);
 
 

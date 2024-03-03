@@ -10,6 +10,7 @@ import PrivateRout from './components/PrivateRout';
 import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
+import Search_Result from './pages/Search_Result';
 
 
 
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />
+        <Route path="/search" element={<Search_Result />} />
         <Route path="/listing/:listingId" element={<Listing />} />
 
         {/* after signOut, can't access profile by using "/profile" */}
