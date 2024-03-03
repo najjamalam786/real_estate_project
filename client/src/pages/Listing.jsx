@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { Navigation } from "swiper/modules";
@@ -13,6 +14,7 @@ import {
   FaParking,
   FaShare,
 } from 'react-icons/fa';
+import Contact from '../components/Contact';
 
 
 
@@ -24,6 +26,10 @@ export default function Listing() {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [contact, setContact] = useState(false);
+  const {currentUser} = useSelector((state) => state.user);
+
+
 
   useEffect(() => {
 
@@ -33,7 +39,7 @@ export default function Listing() {
 
         const res = await fetch(`/api/listing/get/${params.listingId}`);
         const data = await res.json();
-        console.log(data.type);
+        
         if (data.success === false) {
           setError(true);
           setLoading(false);
@@ -121,7 +127,7 @@ export default function Listing() {
                     {listing.bathrooms > 1 ? `${listing.bathrooms} Bathrooms` : '1 Bathroom'}
                   </li>
                   <li className='flex items-center gap-2 whitespace-nowrap '>
-                    <FaMapMarkedAlt className='text-lg' />
+                    <FaParking className='text-lg' />
                     {listing.parking ? 'Parking spot' : 'No parking'}
                   </li>
                   <li className='flex items-center gap-2 whitespace-nowrap '>
@@ -129,6 +135,18 @@ export default function Listing() {
                     {listing.furnished ? 'Furnished' : 'Not furnished'}
                   </li>
                 </ul>
+
+                {currentUser && (
+                  listing.useRef !== currentUser._id && !contact && (
+                    <button onClick={() => setContact(true)} className='bg-slate-700 text-white p-3 uppercase rounded-lg'>
+                      Contact Landlord
+                    </button>
+                    
+                  )
+                )}
+                { contact && (
+                  <Contact listing={listing}/>
+                )}
             </div>
           </div>
           
