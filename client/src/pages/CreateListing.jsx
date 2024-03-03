@@ -33,6 +33,7 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [filePercent, setFilePercent] = useState(0);
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate();
 
@@ -79,7 +80,8 @@ export default function CreateListing() {
                 (snapshot) => {
                     const progress =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
+                        setFilePercent(Math.round(progress));
+                    
                 },
                 (error) => {
                     reject(error);
@@ -149,7 +151,7 @@ export default function CreateListing() {
             });
 
             const data = await res.json();
-            console.log(data.message);
+            
             setLoading(false);
 
             if (data.success === false) {
@@ -328,6 +330,8 @@ export default function CreateListing() {
                             </button>
                         </div>
 
+                        {uploading && <p className="text-green-700 text-sm">{`Upload is ${filePercent}% done`}</p>}
+
                         <p className="text-red-700 text-sm">
                             {imageUploadError && imageUploadError}
                         </p>
@@ -351,6 +355,9 @@ export default function CreateListing() {
                                     </button>
                                 </div>
                             ))}
+
+                        
+
                         <button
                             type="submit"
                             // protect un-necessary click use "disable={loading || uploading}"
@@ -359,6 +366,7 @@ export default function CreateListing() {
                         >
                             {loading ? 'Creating...' : 'Create List'}
                         </button>
+
                         {error && <p className="text-red-700 text-sm">{error}</p>}
                     </div>
                 </form>

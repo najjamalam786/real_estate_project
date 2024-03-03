@@ -29,7 +29,7 @@ export default function Header() {
         const urlParams = new URLSearchParams(location.search);
         const searchTermFromUrl = urlParams.get('searchTerm');
         // get search term from url
-        console.log(searchTermFromUrl);
+        
         if(searchTermFromUrl){
             setSearchInput(searchTermFromUrl);
         }

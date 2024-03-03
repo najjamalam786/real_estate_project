@@ -38,7 +38,7 @@ export default function SignIn() {
       });
 
       const data = await res.json();
-      console.log(data);
+      
 
       e.target.reset();
       

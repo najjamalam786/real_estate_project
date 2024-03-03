@@ -33,6 +33,7 @@ export default function UpdateListing() {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [filePercent, setFilePercent] = useState(0);
     const { currentUser } = useSelector(state => state.user);
     const navigate = useNavigate();
     const params = useParams();
@@ -45,7 +46,7 @@ export default function UpdateListing() {
             const res = await fetch(`/api/listing/get/${listingId}`)
             const data = await res.json();
 
-            if(data.success === false){
+            if (data.success === false) {
                 console.log(data.message);
                 return;
             }
@@ -97,7 +98,8 @@ export default function UpdateListing() {
                 (snapshot) => {
                     const progress =
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
+                    setFilePercent(Math.round(progress));
+
                 },
                 (error) => {
                     reject(error);
@@ -167,7 +169,6 @@ export default function UpdateListing() {
             });
 
             const data = await res.json();
-            console.log(data.message);
             setLoading(false);
 
             if (data.success === false) {
@@ -175,7 +176,7 @@ export default function UpdateListing() {
             }
 
             navigate(`/listing/${data._id}`)
-            
+
         } catch (err) {
             setError(err.message);
             setLoading(false);
@@ -346,6 +347,8 @@ export default function UpdateListing() {
                             </button>
                         </div>
 
+                        {uploading && <p className="text-green-700 text-sm">Upload is ${filePercent}% done</p>}
+
                         <p className="text-red-700 text-sm">
                             {imageUploadError && imageUploadError}
                         </p>
@@ -369,6 +372,9 @@ export default function UpdateListing() {
                                     </button>
                                 </div>
                             ))}
+
+                        
+
                         <button
                             type="submit"
                             // protect un-necessary click use "disable={loading || uploading}"
@@ -377,6 +383,9 @@ export default function UpdateListing() {
                         >
                             {loading ? 'Update...' : 'Update List'}
                         </button>
+
+
+
                         {error && <p className="text-red-700 text-sm">{error}</p>}
                     </div>
                 </form>
