@@ -133,7 +133,7 @@ export default function Search_Result() {
         <div className='flex flex-col md:flex-row'>
             
             <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen'>
-                <form onSubmit={handleSubmit} className='flex flex-col gap-8 md:w-[280px]'>
+                <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
                     <div className='flex items-center gap-2'>
                         <label className='whitespace-nowrap font-semibold'>
                             Search Term:
@@ -262,7 +262,7 @@ export default function Search_Result() {
 
                 </form>
             </div>
-            <div >
+            <div className='flex-1'>
                 <h1 className='text-3xl text-slate-700 mt-5 font-semibold border-b p-3 '>Listing Results</h1>
 
                 <div className='p-7 flex flex-wrap  gap-4'>
