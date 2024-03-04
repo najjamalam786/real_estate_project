@@ -224,20 +224,22 @@ export default function Profile() {
         <div key={listing._id} className="border rounded-lg p-3 flex justify-between items-center gap-4">
 
           <Link to={`/listing/${listing._id}`}>
-            <img src={listing.imageUrls[0]} className="max-h-36 max-w-36 object-contain" alt='listingImage'/>
+            <img src={listing.imageUrls[0]} className="max-h-36 max-w-36 object-contain rounded-lg" alt='listingImage'/>
           </Link>
 
-          <Link>
-          <p className="text-slate-700 font-semibold flex-1 hover:underline truncate">{listing.name}</p>
+          <Link to={`/listing/${listing._id}`}>
+          <p className="text-slate-700 w-40 font-semibold flex-1 hover:underline truncate">{listing.name}</p>
           </Link>
 
-          <div className="flex flex-col items-start">
-
-          <button onClick={() => handleListingDelete(listing._id)} className="text-red-700 uppercase">Delete</button>
+          <div className="flex flex-col gap-5 items-start">
 
           <Link to={`/update-listing/${listing._id}`}>
           <button className="text-green-700 uppercase">Edit</button>
           </Link>
+          
+          <button onClick={() => handleListingDelete(listing._id)} className="text-red-700 uppercase">Delete</button>
+
+          
         </div>
         </div>
         
