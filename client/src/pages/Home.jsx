@@ -92,8 +92,8 @@ export default function Home() {
       <Swiper navigation>
       {
         offerListings && offerListings.length > 0 && offerListings.map((listing) => (
-          <SwiperSlide>
-            <div style={{background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: 'cover'}} className="h-[500px]" key={listing._id}>
+          <SwiperSlide key={listing._id}>
+            <div  style={{background: `url(${listing.imageUrls[0]}) center no-repeat`, backgroundSize: 'cover'}} className="h-[500px]">
 
 
             </div>
@@ -162,7 +162,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 {
                   saleListings.map((listing) => (
-                    <ListingItems listing={listing} key={listing._id} />
+                    <ListingItems key={listing._id} listing={listing} />
                   ))
                 }
               </div>

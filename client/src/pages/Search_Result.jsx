@@ -14,8 +14,8 @@ export default function Search_Result() {
     order: 'desc',
   });
 
-  const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
@@ -132,8 +132,8 @@ export default function Search_Result() {
 
         <div className='flex flex-col md:flex-row'>
             
-            <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen'>
-                <form onSubmit={handleSubmit} className='flex flex-col gap-8 '>
+            <div className='p-7 border-b-2 md:border-r-2 md:min-h-screen' style={{position: 'relative', top: 0}}>
+                <form onSubmit={handleSubmit} className='flex flex-col gap-8 ' style={{position: "sticky", top: '100px'}}>
                     <div className='flex items-center gap-2'>
                         <label className='whitespace-nowrap font-semibold'>
                             Search Term:

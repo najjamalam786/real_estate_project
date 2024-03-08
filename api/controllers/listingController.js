@@ -70,14 +70,15 @@ export const getListing = async (req, res, next) => {
     }
 }
 
-// get all listings
-export const getAllListings = async (req, res, next) => {
+// Search get all listings
+export const SearchListings = async (req, res, next) => {
     try{
         const limit = parseInt(req.query.limit) || 9;
         const startIndex = parseInt(req.query.startIndex) || 0;
-        
+    
         let offer = req.query.offer;
         if(offer === undefined || offer === 'false'){
+            // "$in" is an operator in mongoDB show all listings that are "false" as well as "true" both offer listings would be showed
             offer = { $in: [false, true] };
             
         }
@@ -91,7 +92,6 @@ export const getAllListings = async (req, res, next) => {
         if(parking === undefined || parking === 'false'){
             parking = { $in: [false, true] };
         }
-
         let type = req.query.type;
         if(type === undefined || type === "all"){
             type = { $in: ['sale', 'rent'] };

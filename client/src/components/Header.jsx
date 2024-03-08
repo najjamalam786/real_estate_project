@@ -14,10 +14,10 @@ export default function Header() {
 
         if(searchInput){
         const urlParams = new URLSearchParams(window.location.search);
-
         urlParams.set('searchTerm', searchInput);
         const searchQuery = urlParams.toString();
-
+        
+        
         navigate(`/search?${searchQuery}`);
     
         }
@@ -49,8 +49,10 @@ export default function Header() {
                 </Link>
 
                 <form onSubmit={handleSearchSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
-                    <input onChange={(e) => setSearchInput(e.target.value)} type="text" 
+                    <input 
+                    type="text" 
                     value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     placeholder='Search...' className='bg-transparent focus:outline-none w-24 sm:w-64' />
                     <button type="submit">
                     <FaSearch  className='text-slate-600 cursor-pointer' />
