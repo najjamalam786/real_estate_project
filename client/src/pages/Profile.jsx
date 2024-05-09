@@ -190,31 +190,47 @@ export default function Profile() {
         <input className='border p-3 rounded-lg' type="email" placeholder='email' defaultValue={currentUser.email} id='email' onChange={handleChange} />
         <input className='border p-3 rounded-lg' type="password" placeholder='password' id='password' onChange={handleChange} />
 
-        <button disabled={loading} type='submit' className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading' : 'Update Profile'}</button>
+        <button disabled={loading} type='submit' className='bg-blue-600 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95'>{loading ? 'Loading' : 'Update Profile'}</button>
 
 
-        <Link to='/create-listing' className="bg-green-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-95 text-center">Create Listing
-        </Link>
+        
 
       </form>
 
-      <div className='flex justify-between mt-5'>
-        <span onClick={handleDeleteUser} className='text-red-700 font-semibold cursor-pointer'>
-          Delete account
-        </span>
-        <span onClick={handleSignOut} className='text-red-700 font-semibold cursor-pointer'>
-          Sign out
-        </span>
-
-      </div>
+      
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>
       <p className='text-green-700 mt-5'> {updateSuccess ? "Profile Updated Successfully!" : ""}</p>
 
-      <button onClick={handleShowListing} className="text-green-700 mt-4 w-full font-semibold hover:opacity-55">
+      <div className="bg-slate-200 p-3 mt-2 rounded-lg">
+        <p className="text-slate-600 font-bold">Sell or Rent Your Property</p>
+      <p className="mt-8 text-slate-500 text-sm">Here you can listing their property over this website by uploading all the related details of their property:</p>
+      <Link to='/create-listing' >
+        <p className=" bg-green-200 hover:bg-green-700 p-3 rounded-lg text-green-700 hover:text-white border-2 border-green-700  mt-2 w-full font-semibold   text-center">Create Listing</p>
+        </Link>
+        </div>
+        
+
+      <div className="bg-slate-200 p-3 mt-2 rounded-lg">
+      <p className="text-slate-600 font-bold">User Property List</p>
+
+        <p className="mt-8 text-slate-600 text-sm">Do you want to edit or delete your properties listing? Click on "Show Listing" button below and then you can edit or delete properties listing:</p>
+      <button onClick={handleShowListing} className="bg-green-200 hover:bg-green-700 p-3 rounded-lg text-green-600 hover:text-white border-2 border-green-700 mt-2 w-full font-semibold">
         Show Listing
       </button>
+      </div>
       <p className='text-red-700 mt-5'>{showListingError ? "Error showing listing" : ""}</p>
+
+      <p className="mt-8 text-slate-600">User can delete their account here:</p>
+      <div className='flex justify-between mt-5'>
+        <span onClick={handleDeleteUser} className='bg-red-700 p-3 rounded-lg text-white font-semibold cursor-pointer hover:opacity-65'>
+          Delete account
+        </span>
+        <span onClick={handleSignOut} className='bg-red-200 hover:bg-red-400 p-3 rounded-lg text-red-700 font-semibold cursor-pointer '>
+          Sign out
+        </span>
+
+      </div>
 
       {userListing &&
         userListing.length > 0 &&
@@ -236,10 +252,10 @@ export default function Profile() {
               <div className="flex flex-col gap-5 items-start">
 
                 <Link to={`/update-listing/${listing._id}`}>
-                  <button className="text-green-700 uppercase">Edit</button>
+                  <button className="bg-green-100 hover:bg-green-500 py-1 px-3 rounded-lg text-green-700 hover:text-white">Edit</button>
                 </Link>
 
-                <button onClick={() => handleListingDelete(listing._id)} className="text-red-700 uppercase">Delete</button>
+                <button onClick={() => handleListingDelete(listing._id)} className=" bg-red-100 hover:bg-red-600 py-1 px-3 rounded-lg text-red-700 hover:text-white">Delete</button>
 
 
               </div>

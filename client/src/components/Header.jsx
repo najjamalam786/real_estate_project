@@ -53,8 +53,8 @@ export default function Header() {
                 <img src={Logo} className='w-8' alt="Logo" />
                     <h1 className='font-bold text-sm sm:text-xl flex flex-wrap mt-4'>
                         
-                        <span className='text-slate-500'>Najjam</span>
-                        <span className='text-slate-700'>Estate</span>
+                        <span className='text-slate-500'>Property</span>
+                        <span className='text-slate-700'>Zone</span>
                     </h1>
                 </Link>
 

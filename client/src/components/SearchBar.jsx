@@ -40,7 +40,7 @@ export default function SearchBar() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     
-                    placeholder='Search...' className='bg-transparent focus:outline-none lg:w-[35rem] w-[16rem]'
+                    placeholder='Search...' className='bg-transparent focus:outline-none pl-10 lg:w-[35rem] w-[16rem]'
                     />
                     <select name="address" onChange={(e) => setAddress(e.target.value)} id="address" className="bg-transparent focus:outline-none w-36 lg:w-40">
                         <option value="">Location</option>

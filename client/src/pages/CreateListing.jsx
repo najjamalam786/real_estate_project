@@ -281,7 +281,7 @@ export default function CreateListing() {
                                 <div className="flex flex-col items-center">
                                     <p>Regular Price</p>
                                     <span className="text-xs">
-                                        {formData.type === 'rent' ? "{ $/month }" : "{ $amount }"}
+                                        {formData.type === 'rent' ? "{ ₹ /month }" : "{ ₹amount }"}
 
                                     </span>
                                 </div>
@@ -298,7 +298,7 @@ export default function CreateListing() {
                                 />
                                 <div className="flex flex-col items-center">
                                     <p>Discount Price</p>
-                                    <span className="text-xs">($ / month)</span>
+                                    <span className="text-xs">(₹ / month)</span>
                                 </div>
                             </div>}
                         </div>
@@ -324,7 +324,7 @@ export default function CreateListing() {
                                 disabled={uploading}
                                 type="button"
                                 onClick={handleImageSubmit}
-                                className="p-3 text-green-700 border border-green-700 rounded uupercase hover:shadow-lg disabled:opacity-80"
+                                className="p-3 text-white font-bold border bg-green-700 rounded uupercase hover:shadow-lg disabled:opacity-80"
                             >
                                 {uploading ? "Uploading..." : "Upload"}
                             </button>

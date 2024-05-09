@@ -25,9 +25,9 @@ export default function Contact({listing}) {
     {landlord !== null && (
         <div className='flex flex-col gap-2'>
             <p className='font-semibold'>
-                Contact 
-                <span className='font-semibold'> {landlord?.username} </span>
-                for 
+                Send Message from
+                <span className='text-red-500 uppercase font-semibold '> {landlord?.username} </span>
+                to 
                 <span className='text-red-500 uppercase font-semibold'> {listing.name.toLowerCase()}</span>
             </p>
             <textarea name="message" id="message" rows="2" className="w-full border p-3 rounded-lg mt-2" onChange={(e) => setMessage(e.target.value)} placeholder="Enter your message here"></textarea>
