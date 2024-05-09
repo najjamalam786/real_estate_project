@@ -98,6 +98,7 @@ export const SearchListings = async (req, res, next) => {
         }
 
         const searchTerm = req.query.searchTerm || '';
+        const address = req.query.address || '';
 
         // sort by latest first listing "createdAt"
         const sort = req.query.sort || 'createdAt';
@@ -109,6 +110,7 @@ export const SearchListings = async (req, res, next) => {
             // "$regex" is built in search functionality for mongoDB
             // "$options" don't care about lower/upper case sensitivity in searching
             name: { $regex: searchTerm, $options: 'i' },
+            address: { $regex: address, $options: 'i' },
             offer,
             furnished,
             parking,

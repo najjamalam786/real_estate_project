@@ -6,6 +6,7 @@ export default function Search_Result() {
     const navigate = useNavigate();
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
+    address: '',
     type: 'all',
     parking: false,
     furnished: false,
@@ -21,6 +22,7 @@ export default function Search_Result() {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get('searchTerm');
+    const addressFromUrl = urlParams.get('address');
     const typeFromUrl = urlParams.get('type');
     const parkingFromUrl = urlParams.get('parking');
     const furnishedFromUrl = urlParams.get('furnished');
@@ -30,6 +32,7 @@ export default function Search_Result() {
 
     if (
       searchTermFromUrl ||
+      addressFromUrl ||
       typeFromUrl ||
       parkingFromUrl ||
       furnishedFromUrl ||
@@ -39,6 +42,7 @@ export default function Search_Result() {
     ) {
       setSidebarData({
         searchTerm: searchTermFromUrl || '',
+        address: addressFromUrl || '',
         type: typeFromUrl || 'all',
         parking: parkingFromUrl === 'true' ? true : false,
         furnished: furnishedFromUrl === 'true' ? true : false,
@@ -78,6 +82,9 @@ export default function Search_Result() {
     if (e.target.id === 'searchTerm') {
       setSidebarData({ ...sidebarData, searchTerm: e.target.value });
     }
+    if (e.target.id === 'address') {
+      setSidebarData({ ...sidebarData, address: e.target.value });
+    }
 
     if (
       e.target.id === 'parking' ||
@@ -104,6 +111,7 @@ export default function Search_Result() {
     e.preventDefault();
     const urlParams = new URLSearchParams();
     urlParams.set('searchTerm', sidebarData.searchTerm);
+    urlParams.set('address', sidebarData.address);
     urlParams.set('type', sidebarData.type);
     urlParams.set('parking', sidebarData.parking);
     urlParams.set('furnished', sidebarData.furnished);
@@ -240,6 +248,19 @@ export default function Search_Result() {
 
                     <div className='flex items-center gap-2'>
                         <label className='whitespace-nowrap
+                        font-semibold'>Address</label>
+                    <select name="address" onChange={handleChange} id="address" className="border rounded-lg p-3 w-full">
+                        <option value="">Select address</option>
+                        <option value="patna">Patna</option>
+                        <option value="bhagalpur">Bhagalpur</option>
+                        <option value="muzaffarpur">Muzaffarpur</option>
+                        <option value="gaya">Gaya</option>
+                        <option value="vaishali">Vaishali</option>
+                    </select> 
+                    </div>
+
+                    <div className='flex items-center gap-2'>
+                        <label className='whitespace-nowrap
                         font-semibold'>Sort:</label>
                         <select 
                         onChange={handleChange}
@@ -265,7 +286,7 @@ export default function Search_Result() {
             <div className='flex-1'>
                 <h1 className='text-3xl text-slate-700 mt-5 font-semibold border-b p-3 '>Listing Results</h1>
 
-                <div className='p-7 flex flex-wrap  gap-4'>
+                <div className=' p-8 flex flex-wrap  gap-4'>
                     {!loading && listings.length === 0 && (
                         <p className="text-3xl text-slate-700 text-center mt-5 font-semibold"> No listings found</p>
                     )}

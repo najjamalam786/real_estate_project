@@ -17,7 +17,10 @@ import Search_Result from './pages/Search_Result';
 export default function App() {
   return (
     <BrowserRouter>
+    
+    
       <Header></Header>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
